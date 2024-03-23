@@ -1,5 +1,4 @@
 use fltk::*;
-use fltk::enums::*;
 use fltk::prelude::*;
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
