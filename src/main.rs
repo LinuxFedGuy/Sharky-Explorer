@@ -1,8 +1,8 @@
 use fltk::*;
+use fltk_theme::*;
 use fltk::prelude::*;
 use walkdir::WalkDir;
 use std::sync::{Arc, Mutex};
-use std::path::{PathBuf};
 use std::time::{Duration, Instant};
 
 fn main() {
@@ -10,8 +10,11 @@ fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut window = window::DoubleWindow::default().with_size(500, 500).with_label("Sharky Explorer || FPS: 0");
 
+    // Theme button
+    let mut theme_but = button::Button::new(470, 2, 20, 22, "L");
+    
     // TextDisplay for file list
-    let file_list = Arc::new(Mutex::new(text::TextDisplay::new(10, 10, 480, 450, "")));
+    let file_list = Arc::new(Mutex::new(text::TextDisplay::new(10, 30, 480, 430, "")));
 
     // Dir search
     let mut dir_search = input::Input::new(10,470, 130, 22, "");
@@ -32,6 +35,31 @@ fn main() {
     // Load the default dir
     clicked(&file_list_clone, "/");
 
+    // Theme switch 
+    let mut dark = true;
+
+    // Theme modes 
+    let dark_mode = ColorTheme::new(color_themes::DARK_THEME);
+    let light_mode = ColorTheme::new(color_themes::GRAY_THEME);
+
+    // Load dark mode by default 
+    dark_mode.apply();
+
+    // Theme Callback
+    theme_but.set_callback(move |b| {
+        if dark == true{
+            // Light mode 
+            b.set_label("D");
+            light_mode.apply();
+            dark = false;
+        } else{
+            // Dark mode
+            b.set_label("L");
+            dark_mode.apply();
+            dark = true;
+        }
+    });
+
     // Call a new thread when the scan open folder is pressed to prevent freezing the window
     open_folder.set_callback(move |_| {
         let file_list_clone = Arc::clone(&file_list_clone);
@@ -49,8 +77,6 @@ fn main() {
             search_for_file(&file_search_clone, &file_list_clone);
         });
     });
-    
-    
 
     // Make the window resizable
     window.make_resizable(true);
@@ -101,32 +127,6 @@ fn search_for_file(f: &input::Input, file_list: &Arc<Mutex<text::TextDisplay>>) 
     }
 }
 
-
-/*
-fn levenshtein_distance(s1: &str, s2: &str) -> usize {
-    let len1 = s1.chars().count();
-    let len2 = s2.chars().count();
-
-    let mut costs: Vec<usize> = (0..=len2).collect();
-
-    for (i, char1) in s1.chars().enumerate() {
-        let mut prev = i;
-        costs[0] = i + 1;
-
-        for (j, char2) in s2.chars().enumerate() {
-            let current = costs[j + 1];
-            if char1 == char2 {
-                costs[j + 1] = prev;
-            } else {
-                costs[j + 1] = (costs[j + 1]).min(costs[j]).min(prev) + 1;
-            }
-            prev = current;
-        }
-    }
-
-    costs[len2]
-}
-*/
 
 fn clicked(file_list: &Arc<Mutex<text::TextDisplay>>, current_dir: &str) {
     let mut file_names = String::new();

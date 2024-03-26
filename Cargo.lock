@@ -61,6 +61,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "fltk-theme"
+version = "0.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3539d27a815514b56af2afa6b8e7c6d6b9274a103239487d5a60daa6340a4868"
+dependencies = [
+ "fltk",
+]
+
+[[package]]
 name = "paste"
 version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -80,6 +89,7 @@ name = "sharky-explorer"
 version = "0.1.0"
 dependencies = [
  "fltk",
+ "fltk-theme",
  "walkdir",
 ]
 

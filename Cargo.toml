@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 fltk = { version = "1.4.26", features = ["enable-glwindow"] }
+fltk-theme = "0.7.2"
 walkdir = "2.5.0"
