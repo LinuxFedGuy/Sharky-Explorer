@@ -1,6 +1,14 @@
 # Sharky-Explorer
-A basic but extremly fast and efficient file explorer writen in rust 
 
-As of now there is no functionality except navigation and searching files i plan to have a full but minimal and fast explorer soon
+A basic but very fast file viewer & file searcher.
 
-This isnt really meant for just anyone to use feel free to contribute its just a learning project for me 
+# Details 
+
+This is only a viewer it can not manage files or view them only search for directorys and file locations and navigate to them.
+
+# How to build it
+
+    cargo build 
+
+the build file will be in the directory target/debug.
+
